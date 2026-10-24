@@ -154,6 +154,18 @@ section{margin-bottom:38px}
 .go{font-size:.85rem;font-weight:700;color:var(--pink)}
 .link.hot{border-color:var(--pink)}
 
+/* ---- Lượt truy cập ---- */
+.visits{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:18px 22px;border-radius:18px;
+  background:var(--panel);border:1px solid var(--line);
+}
+.visits .lab{color:var(--muted);font-size:.92rem}
+.visits .num{
+  font-size:2rem;font-weight:900;line-height:1;letter-spacing:.02em;
+  color:var(--cyan);font-variant-numeric:tabular-nums;
+}
+
 footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
 
 .toast{
@@ -265,6 +277,13 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
     </nav>
   </section>
 
+  <section>
+    <div class="visits">
+      <span class="lab">👀 Lượt truy cập trang</span>
+      <span class="num" id="visits" aria-live="polite">…</span>
+    </div>
+  </section>
+
   <footer>© <span id="yr"></span> Nguyễn Phước Thạnh</footer>
 </main>
 
@@ -339,6 +358,22 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
   $('bday').innerHTML = days === 0
     ? '🎂 <strong>Hôm nay là sinh nhật Thạnh!</strong>'
     : '🎂 Còn <strong>' + days + ' ngày</strong> nữa là sinh nhật Thạnh.';
+
+  /* ---------- Đếm lượt truy cập ---------- */
+  // Đổi COUNTER_KEY nếu bạn muốn bắt đầu đếm lại từ 0
+  var COUNTER_KEY = 'phuocthanh1409.github.io/info';
+  var counted = false;
+  try { counted = sessionStorage.getItem('counted') === '1'; } catch(e){}
+  var action = counted ? 'get' : 'hit'; // F5 trong cùng một phiên thì không tính thêm
+  fetch('https://abacus.jasoncameron.dev/' + action + '/' + COUNTER_KEY)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (typeof d.value === 'number') {
+        $('visits').textContent = d.value.toLocaleString('vi-VN');
+        try { sessionStorage.setItem('counted', '1'); } catch(e){}
+      } else { $('visits').textContent = '0'; }
+    })
+    .catch(function(){ $('visits').textContent = '—'; });
 
   $('yr').textContent = now.getFullYear();
 })();
