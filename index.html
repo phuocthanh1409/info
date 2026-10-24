@@ -10,14 +10,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:dark;
   --bg:#150f2e;
   --panel:#1f1745;
+  --hover:#271d58;
   --line:#3a2d73;
   --text:#f3efff;
   --muted:#a99fd6;
   --pink:#ff4f9a;
   --cyan:#4de3f0;
   --gold:#ffc857;
+  --on-pink:#1a0b24;
+  --glow1:rgba(255,79,154,.22);
+  --glow2:rgba(77,227,240,.14);
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f6f2ff;
+  --panel:#ffffff;
+  --hover:#f0e9ff;
+  --line:#d9cffa;
+  --text:#1d1442;
+  --muted:#5f5690;
+  --pink:#d41f6a;
+  --cyan:#0a7f90;
+  --gold:#9a5d00;
+  --on-pink:#ffffff;
+  --glow1:rgba(255,79,154,.18);
+  --glow2:rgba(77,227,240,.22);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -28,24 +48,42 @@ body{
   min-height:100vh;
   line-height:1.6;
   background-image:
-    radial-gradient(60rem 30rem at 85% -10%,rgba(255,79,154,.22),transparent 60%),
-    radial-gradient(50rem 30rem at -10% 40%,rgba(77,227,240,.14),transparent 60%);
+    radial-gradient(60rem 30rem at 85% -10%,var(--glow1),transparent 60%),
+    radial-gradient(50rem 30rem at -10% 40%,var(--glow2),transparent 60%);
   background-attachment:fixed;
+  transition:background-color .25s,color .25s;
 }
 a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
 
-.wrap{max-width:760px;margin:0 auto;padding:56px 22px 40px}
+.wrap{max-width:760px;margin:0 auto;padding:72px 22px 40px}
 
+/* ---- Thanh điều khiển ---- */
+.tools{
+  position:fixed;top:0;right:0;z-index:10;
+  display:flex;gap:8px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 14px 0 0;
+}
+.tool{
+  display:flex;align-items:center;gap:8px;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:8px 14px;cursor:pointer;
+  font-size:.85rem;font-weight:700;
+}
+.tool:hover{border-color:var(--pink)}
+.tool[aria-pressed="true"]{border-color:var(--pink);background:var(--hover)}
+.tool .dot{font-size:1.05rem;line-height:1}
+
+/* ---- Hero ---- */
 .hero{margin-bottom:40px}
 .tag{
   display:inline-block;
   font-size:.85rem;font-weight:500;color:var(--cyan);
-  border:1px solid var(--line);background:rgba(77,227,240,.07);
+  border:1px solid var(--line);background:var(--panel);
   padding:4px 14px;border-radius:999px;margin-bottom:22px;
 }
 .glitch{
-  position:relative;
   font-size:clamp(3rem,13vw,6.2rem);
   font-weight:900;
   line-height:.98;
@@ -61,77 +99,106 @@ a{color:inherit;text-decoration:none}
   70%{text-shadow:6px 0 var(--pink),-6px 0 var(--cyan)}
   100%{text-shadow:3px 0 var(--pink),-3px 0 var(--cyan);transform:none}
 }
-.real{margin-top:18px;font-size:1.25rem;font-weight:500}
-.real b{font-weight:700}
+.real{margin-top:18px;font-size:1.25rem;font-weight:700}
 .job{color:var(--muted);font-size:1rem}
 
 h2{font-size:1.1rem;font-weight:700;margin:0 0 14px;color:var(--gold)}
 section{margin-bottom:38px}
 
+/* ---- Thông tin ---- */
 .info{
   background:var(--panel);
   border:1px solid var(--line);
   border-radius:18px;
   overflow:hidden;
 }
-.row{
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:16px 20px;
-}
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px}
 .row + .row{border-top:1px dashed var(--line)}
 .row dt{color:var(--muted);font-size:.92rem}
 .row dd{font-weight:700;text-align:right}
 .copy{
-  font:inherit;font-size:.8rem;font-weight:700;
-  background:var(--pink);color:#1a0b24;
+  font-size:.8rem;font-weight:700;
+  background:var(--pink);color:var(--on-pink);
   border:0;border-radius:999px;padding:5px 13px;cursor:pointer;margin-left:10px;
 }
 .copy:hover{filter:brightness(1.1)}
-.bday{
-  margin-top:12px;font-size:.92rem;color:var(--muted);
-}
+.bday{margin-top:12px;font-size:.92rem;color:var(--muted)}
 .bday strong{color:var(--cyan)}
+
+/* ---- Lưu ý liên hệ ---- */
+.notice{
+  display:flex;gap:12px;align-items:flex-start;
+  margin-bottom:12px;padding:14px 18px;border-radius:14px;
+  border:1px solid var(--gold);background:var(--panel);
+  font-size:.92rem;
+}
+.notice .ic{font-size:1.3rem;line-height:1.3}
+.notice b{color:var(--gold)}
 
 /* ---- Liên kết ---- */
 .links{display:grid;gap:12px}
 .link{
   display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
+  width:100%;text-align:left;cursor:pointer;
   padding:16px 20px;border-radius:16px;
   background:var(--panel);border:1px solid var(--line);
   transition:transform .15s,border-color .15s,background .15s;
 }
-.link:hover{transform:translateX(6px);border-color:var(--pink);background:#271d58}
+.link:hover{transform:translateX(6px);border-color:var(--pink);background:var(--hover)}
 .ico{
   width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
   font-size:1.4rem;background:var(--bg);border:1px solid var(--line);
 }
-.link .t{font-weight:700;line-height:1.3}
-.link .u{font-size:.82rem;color:var(--muted);word-break:break-all}
+.link .t{font-weight:700;line-height:1.3;display:block}
+.link .u{font-size:.82rem;color:var(--muted);word-break:break-all;display:block}
 .go{font-size:.85rem;font-weight:700;color:var(--pink)}
-.link.hot{border-color:var(--pink);background:linear-gradient(100deg,rgba(255,79,154,.18),var(--panel) 70%)}
+.link.hot{border-color:var(--pink)}
 
 footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:var(--pink);color:var(--on-pink);font-weight:700;font-size:.9rem;
+  padding:10px 18px;border-radius:999px;transition:.2s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media(max-width:520px){
   .row{flex-direction:column;align-items:flex-start;gap:2px}
   .row dd{text-align:left}
   .go{display:none}
   .link{grid-template-columns:auto 1fr}
+  .tool .lbl{display:none}
+  .tool{padding:9px 12px}
 }
 @media(prefers-reduced-motion:reduce){
   .glitch{animation:none}
-  .link{transition:none}
+  .link,.toast,body{transition:none}
   html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
+
+<div class="tools">
+  <button class="tool" id="musicBtn" type="button" aria-pressed="false" aria-label="Bật hoặc tắt nhạc nền">
+    <span class="dot" id="musicIco">🔇</span><span class="lbl" id="musicLbl">Nhạc: tắt</span>
+  </button>
+  <button class="tool" id="themeBtn" type="button" aria-label="Chuyển nền sáng hoặc tối">
+    <span class="dot" id="themeIco">🌙</span><span class="lbl" id="themeLbl">Nền tối</span>
+  </button>
+</div>
+
+<!-- Nhạc nền: đặt file nhac.mp3 cùng thư mục với index.html (hoặc đổi đường dẫn bên dưới) -->
+<audio id="bgm" src="nhac.mp3" loop preload="none"></audio>
+
 <main class="wrap">
 
   <header class="hero">
     <span class="tag">Lập trình viên</span>
     <h1 class="glitch">Thạnh<br>Mê Hack</h1>
-    <p class="real"><b>Nguyễn Phước Thạnh</b></p>
+    <p class="real">Nguyễn Phước Thạnh</p>
     <p class="job">Biệt danh: Thạnh Mê Hack</p>
   </header>
 
@@ -144,10 +211,27 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
       <div class="row"><dt>Nghề nghiệp</dt><dd>Lập trình viên</dd></div>
       <div class="row">
         <dt>Tên Roblox</dt>
-        <dd><span id="rbx">hellokaymy</span><button class="copy" id="copyBtn" type="button">Sao chép</button></dd>
+        <dd><span>hellokaymy</span><button class="copy" type="button" data-copy="hellokaymy">Sao chép</button></dd>
       </div>
     </dl>
     <p class="bday" id="bday"></p>
+  </section>
+
+  <section>
+    <h2>Liên hệ</h2>
+    <p class="notice"><span class="ic">📵</span><span><b>Lưu ý:</b> không gọi điện, chỉ nhắn tin qua Zalo.</span></p>
+    <nav class="links">
+      <a class="link" href="https://zalo.me/0938615709" target="_blank" rel="noopener">
+        <span class="ico">💬</span>
+        <span><span class="t">Zalo (chỉ nhắn tin)</span><span class="u">0938 615 709</span></span>
+        <span class="go">Nhắn</span>
+      </a>
+      <button class="link" type="button" data-copy="phuoc.thanh1409" data-msg="Đã chép tên Discord">
+        <span class="ico">🎧</span>
+        <span><span class="t">Discord</span><span class="u">phuoc.thanh1409 (bấm để sao chép)</span></span>
+        <span class="go">Chép</span>
+      </button>
+    </nav>
   </section>
 
   <section>
@@ -155,22 +239,27 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
     <nav class="links">
       <a class="link" href="https://www.tiktok.com/@phuoc.thanh1409" target="_blank" rel="noopener">
         <span class="ico">🎵</span>
-        <span><span class="t">TikTok</span><br><span class="u">@phuoc.thanh1409</span></span>
+        <span><span class="t">TikTok</span><span class="u">@phuoc.thanh1409</span></span>
+        <span class="go">Mở</span>
+      </a>
+      <a class="link" href="https://www.youtube.com/@phuoc.thanh1409" target="_blank" rel="noopener">
+        <span class="ico">📺</span>
+        <span><span class="t">YouTube</span><span class="u">@phuoc.thanh1409</span></span>
         <span class="go">Mở</span>
       </a>
       <a class="link hot" href="https://linkbio.co/c00lkidd" target="_blank" rel="noopener">
         <span class="ico">🎮</span>
-        <span><span class="t">Script Roblox</span><br><span class="u">linkbio.co/c00lkidd</span></span>
+        <span><span class="t">Script Roblox</span><span class="u">linkbio.co/c00lkidd</span></span>
         <span class="go">Mở</span>
       </a>
       <a class="link hot" href="https://phuocthanh1409.github.io/ThanhMeHack" target="_blank" rel="noopener">
         <span class="ico">💻</span>
-        <span><span class="t">Script Roblox (bản web)</span><br><span class="u">phuocthanh1409.github.io/ThanhMeHack</span></span>
+        <span><span class="t">Script Roblox (bản web)</span><span class="u">phuocthanh1409.github.io/ThanhMeHack</span></span>
         <span class="go">Mở</span>
       </a>
       <a class="link" href="https://phuocthanh1409.github.io/repo" target="_blank" rel="noopener">
         <span class="ico">📦</span>
-        <span><span class="t">Repo Jailbreak Rootless</span><br><span class="u">phuocthanh1409.github.io/repo</span></span>
+        <span><span class="t">Repo Jailbreak Rootless</span><span class="u">phuocthanh1409.github.io/repo</span></span>
         <span class="go">Mở</span>
       </a>
     </nav>
@@ -179,26 +268,80 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
   <footer>© <span id="yr"></span> Nguyễn Phước Thạnh</footer>
 </main>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  var root = document.documentElement;
+  var $ = function(id){ return document.getElementById(id); };
 
-  (function(){
-    var now = new Date();
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var next = new Date(now.getFullYear(), 8, 14);
-    if (next < today) next = new Date(now.getFullYear() + 1, 8, 14);
-    var days = Math.round((next - today) / 86400000);
-    var el = document.getElementById('bday');
-    el.innerHTML = days === 0
-      ? '🎂 <strong>Hôm nay là sinh nhật Thạnh!</strong>'
-      : '🎂 Còn <strong>' + days + ' ngày</strong> nữa là sinh nhật Thạnh.';
-  })();
+  /* ---------- Toast ---------- */
+  var toastTimer;
+  function toast(msg){
+    var t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+  }
 
-  document.getElementById('copyBtn').addEventListener('click', function(){
-    var btn = this, txt = document.getElementById('rbx').textContent;
-    function done(){ btn.textContent = 'Đã chép'; setTimeout(function(){ btn.textContent = 'Sao chép'; }, 1500); }
-    if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(done, done); } else { done(); }
+  /* ---------- Nền sáng / tối ---------- */
+  function applyTheme(mode){
+    root.setAttribute('data-theme', mode);
+    $('themeIco').textContent = mode === 'dark' ? '🌙' : '☀️';
+    $('themeLbl').textContent = mode === 'dark' ? 'Nền tối' : 'Nền sáng';
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch(e){}
+  var startMode = saved || (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(startMode);
+  $('themeBtn').addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('theme', next); } catch(e){}
   });
+
+  /* ---------- Nhạc nền ---------- */
+  var bgm = $('bgm'), mBtn = $('musicBtn');
+  function setMusicUI(on){
+    mBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    $('musicIco').textContent = on ? '🔊' : '🔇';
+    $('musicLbl').textContent = on ? 'Nhạc: bật' : 'Nhạc: tắt';
+  }
+  mBtn.addEventListener('click', function(){
+    if (bgm.paused) {
+      bgm.volume = 0.6;
+      var p = bgm.play();
+      if (p && p.then) {
+        p.then(function(){ setMusicUI(true); })
+         .catch(function(){ setMusicUI(false); toast('Chưa có file nhạc nhac.mp3'); });
+      } else { setMusicUI(true); }
+    } else {
+      bgm.pause(); setMusicUI(false);
+    }
+  });
+  bgm.addEventListener('error', function(){ setMusicUI(false); });
+
+  /* ---------- Sao chép ---------- */
+  document.querySelectorAll('[data-copy]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var txt = el.getAttribute('data-copy');
+      var msg = el.getAttribute('data-msg') || 'Đã sao chép';
+      function ok(){ toast(msg); }
+      if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(ok, ok); } else { ok(); }
+    });
+  });
+
+  /* ---------- Đếm ngược sinh nhật 14/09 ---------- */
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var next = new Date(now.getFullYear(), 8, 14);
+  if (next < today) next = new Date(now.getFullYear() + 1, 8, 14);
+  var days = Math.round((next - today) / 86400000);
+  $('bday').innerHTML = days === 0
+    ? '🎂 <strong>Hôm nay là sinh nhật Thạnh!</strong>'
+    : '🎂 Còn <strong>' + days + ' ngày</strong> nữa là sinh nhật Thạnh.';
+
+  $('yr').textContent = now.getFullYear();
+})();
 </script>
 </body>
 </html>
