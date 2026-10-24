@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thạnh Mê Hack – Nguyễn Phước Thạnh</title>
+<meta name="description" content="Trang thông tin của Thạnh Mê Hack, lập trình viên.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#150f2e;
+  --panel:#1f1745;
+  --line:#3a2d73;
+  --text:#f3efff;
+  --muted:#a99fd6;
+  --pink:#ff4f9a;
+  --cyan:#4de3f0;
+  --gold:#ffc857;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.6;
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%,rgba(255,79,154,.22),transparent 60%),
+    radial-gradient(50rem 30rem at -10% 40%,rgba(77,227,240,.14),transparent 60%);
+  background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+.wrap{max-width:760px;margin:0 auto;padding:56px 22px 40px}
+
+.hero{margin-bottom:40px}
+.tag{
+  display:inline-block;
+  font-size:.85rem;font-weight:500;color:var(--cyan);
+  border:1px solid var(--line);background:rgba(77,227,240,.07);
+  padding:4px 14px;border-radius:999px;margin-bottom:22px;
+}
+.glitch{
+  position:relative;
+  font-size:clamp(3rem,13vw,6.2rem);
+  font-weight:900;
+  line-height:.98;
+  letter-spacing:-.03em;
+  text-shadow:3px 0 var(--pink),-3px 0 var(--cyan);
+  animation:boot 1.1s steps(1,end) 1;
+}
+@keyframes boot{
+  0%{text-shadow:14px 0 var(--pink),-14px 0 var(--cyan);transform:translateX(-6px) skewX(-6deg)}
+  15%{text-shadow:-10px 0 var(--pink),10px 0 var(--cyan);transform:translateX(5px)}
+  30%{text-shadow:8px 0 var(--pink),-8px 0 var(--cyan);transform:translateX(-3px) skewX(4deg)}
+  50%{text-shadow:-5px 0 var(--pink),5px 0 var(--cyan);transform:none}
+  70%{text-shadow:6px 0 var(--pink),-6px 0 var(--cyan)}
+  100%{text-shadow:3px 0 var(--pink),-3px 0 var(--cyan);transform:none}
+}
+.real{margin-top:18px;font-size:1.25rem;font-weight:500}
+.real b{font-weight:700}
+.job{color:var(--muted);font-size:1rem}
+
+h2{font-size:1.1rem;font-weight:700;margin:0 0 14px;color:var(--gold)}
+section{margin-bottom:38px}
+
+.info{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+}
+.row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:16px 20px;
+}
+.row + .row{border-top:1px dashed var(--line)}
+.row dt{color:var(--muted);font-size:.92rem}
+.row dd{font-weight:700;text-align:right}
+.copy{
+  font:inherit;font-size:.8rem;font-weight:700;
+  background:var(--pink);color:#1a0b24;
+  border:0;border-radius:999px;padding:5px 13px;cursor:pointer;margin-left:10px;
+}
+.copy:hover{filter:brightness(1.1)}
+.bday{
+  margin-top:12px;font-size:.92rem;color:var(--muted);
+}
+.bday strong{color:var(--cyan)}
+
+/* ---- Liên kết ---- */
+.links{display:grid;gap:12px}
+.link{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
+  padding:16px 20px;border-radius:16px;
+  background:var(--panel);border:1px solid var(--line);
+  transition:transform .15s,border-color .15s,background .15s;
+}
+.link:hover{transform:translateX(6px);border-color:var(--pink);background:#271d58}
+.ico{
+  width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  font-size:1.4rem;background:var(--bg);border:1px solid var(--line);
+}
+.link .t{font-weight:700;line-height:1.3}
+.link .u{font-size:.82rem;color:var(--muted);word-break:break-all}
+.go{font-size:.85rem;font-weight:700;color:var(--pink)}
+.link.hot{border-color:var(--pink);background:linear-gradient(100deg,rgba(255,79,154,.18),var(--panel) 70%)}
+
+footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
+
+@media(max-width:520px){
+  .row{flex-direction:column;align-items:flex-start;gap:2px}
+  .row dd{text-align:left}
+  .go{display:none}
+  .link{grid-template-columns:auto 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .glitch{animation:none}
+  .link{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="hero">
+    <span class="tag">Lập trình viên</span>
+    <h1 class="glitch">Thạnh<br>Mê Hack</h1>
+    <p class="real"><b>Nguyễn Phước Thạnh</b></p>
+    <p class="job">Biệt danh: Thạnh Mê Hack</p>
+  </header>
+
+  <section>
+    <h2>Thông tin</h2>
+    <dl class="info">
+      <div class="row"><dt>Họ và tên</dt><dd>Nguyễn Phước Thạnh</dd></div>
+      <div class="row"><dt>Biệt danh</dt><dd>Thạnh Mê Hack</dd></div>
+      <div class="row"><dt>Ngày sinh</dt><dd>14/09</dd></div>
+      <div class="row"><dt>Nghề nghiệp</dt><dd>Lập trình viên</dd></div>
+      <div class="row">
+        <dt>Tên Roblox</dt>
+        <dd><span id="rbx">hellokaymy</span><button class="copy" id="copyBtn" type="button">Sao chép</button></dd>
+      </div>
+    </dl>
+    <p class="bday" id="bday"></p>
+  </section>
+
+  <section>
+    <h2>Liên kết</h2>
+    <nav class="links">
+      <a class="link" href="https://www.tiktok.com/@phuoc.thanh1409" target="_blank" rel="noopener">
+        <span class="ico">🎵</span>
+        <span><span class="t">TikTok</span><br><span class="u">@phuoc.thanh1409</span></span>
+        <span class="go">Mở</span>
+      </a>
+      <a class="link hot" href="https://linkbio.co/c00lkidd" target="_blank" rel="noopener">
+        <span class="ico">🎮</span>
+        <span><span class="t">Script Roblox</span><br><span class="u">linkbio.co/c00lkidd</span></span>
+        <span class="go">Mở</span>
+      </a>
+      <a class="link hot" href="https://phuocthanh1409.github.io/ThanhMeHack" target="_blank" rel="noopener">
+        <span class="ico">💻</span>
+        <span><span class="t">Script Roblox (bản web)</span><br><span class="u">phuocthanh1409.github.io/ThanhMeHack</span></span>
+        <span class="go">Mở</span>
+      </a>
+      <a class="link" href="https://phuocthanh1409.github.io/repo" target="_blank" rel="noopener">
+        <span class="ico">📦</span>
+        <span><span class="t">Repo Jailbreak Rootless</span><br><span class="u">phuocthanh1409.github.io/repo</span></span>
+        <span class="go">Mở</span>
+      </a>
+    </nav>
+  </section>
+
+  <footer>© <span id="yr"></span> Nguyễn Phước Thạnh</footer>
+</main>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  (function(){
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var next = new Date(now.getFullYear(), 8, 14);
+    if (next < today) next = new Date(now.getFullYear() + 1, 8, 14);
+    var days = Math.round((next - today) / 86400000);
+    var el = document.getElementById('bday');
+    el.innerHTML = days === 0
+      ? '🎂 <strong>Hôm nay là sinh nhật Thạnh!</strong>'
+      : '🎂 Còn <strong>' + days + ' ngày</strong> nữa là sinh nhật Thạnh.';
+  })();
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var btn = this, txt = document.getElementById('rbx').textContent;
+    function done(){ btn.textContent = 'Đã chép'; setTimeout(function(){ btn.textContent = 'Sao chép'; }, 1500); }
+    if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(done, done); } else { done(); }
+  });
+</script>
+</body>
+</html>
