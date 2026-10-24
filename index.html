@@ -21,6 +21,7 @@
   --cyan:#4de3f0;
   --gold:#ffc857;
   --on-pink:#1a0b24;
+  --glass:rgba(31,23,69,.42);
   --glow1:rgba(255,79,154,.22);
   --glow2:rgba(77,227,240,.14);
 }
@@ -36,6 +37,7 @@
   --cyan:#0a7f90;
   --gold:#9a5d00;
   --on-pink:#ffffff;
+  --glass:rgba(255,255,255,.5);
   --glow1:rgba(255,79,154,.18);
   --glow2:rgba(77,227,240,.22);
 }
@@ -64,10 +66,15 @@ button{font:inherit;color:inherit}
   position:fixed;top:0;right:0;z-index:10;
   display:flex;gap:8px;
   padding:calc(12px + env(safe-area-inset-top,0px)) 14px 0 0;
+  transition:transform .25s ease,opacity .25s ease;
 }
+.tools.hide{transform:translateY(-130%);opacity:0;pointer-events:none}
 .tool{
   display:flex;align-items:center;gap:8px;
-  background:var(--panel);border:1px solid var(--line);
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(16px) saturate(1.5);
+  backdrop-filter:blur(16px) saturate(1.5);
+  border:1px solid var(--line);
   border-radius:999px;padding:8px 14px;cursor:pointer;
   font-size:.85rem;font-weight:700;
 }
@@ -186,7 +193,7 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
 }
 @media(prefers-reduced-motion:reduce){
   .glitch{animation:none}
-  .link,.toast,body{transition:none}
+  .link,.toast,body,.tools{transition:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -338,6 +345,21 @@ footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.85rem}
     }
   });
   bgm.addEventListener('error', function(){ setMusicUI(false); });
+
+  /* ---------- Ẩn nút khi cuộn xuống, hiện khi cuộn lên ---------- */
+  var tools = document.querySelector('.tools');
+  var lastY = window.pageYOffset, ticking = false;
+  window.addEventListener('scroll', function(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = Math.max(0, window.pageYOffset);
+      if (y < 80 || y < lastY - 4) tools.classList.remove('hide');
+      else if (y > lastY + 4) tools.classList.add('hide');
+      lastY = y;
+      ticking = false;
+    });
+  }, { passive: true });
 
   /* ---------- Sao chép ---------- */
   document.querySelectorAll('[data-copy]').forEach(function(el){
